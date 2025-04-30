@@ -5,11 +5,11 @@ on:
     inputs:
       device:
         type: choice
-        description: '设备型号'
+        description: '设备型号-PD1901BF_EX'
         required: true
         options:
-        - 'k62v1_64_bsp_debug_defconfig_PD1901BF_EX'
-        - 'k62v1_64_bsp_defconfig_PD1901BF_EX'
+        - 'k62v1_64_bsp_debug_defconfig'
+        - 'k62v1_64_bsp_defconfig'
       ksu:
         type: choice
         description: '集成ksu' 
@@ -88,6 +88,7 @@ jobs:
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang-aosp/bin:$GITHUB_WORKSPACE/kernel_workspace/gcc64/bin:$GITHUB_WORKSPACE/kernel_workspace/gcc32/bin:$PATH
         export KBUILD_BUILD_HOST=企鹅交流:722651738
         export KBUILD_BUILD_USER=kuan-jsbsbxjxh66
+        cp -a arch/arm64/configs/${{ github.event.inputs.device }}_PD1901BF_EX arch/arm64/configs/${{ github.event.inputs.device }}
         make -s -j$(nproc --all) O=out ARCH=arm64 ${{ github.event.inputs.device }}
         make -j$(nproc --all) CC="ccache clang" O=out ARCH=arm64 CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi-
                 
