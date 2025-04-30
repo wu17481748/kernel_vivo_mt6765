@@ -57,7 +57,7 @@ jobs:
     - name: 下载内核源码
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
-        git clone https://github.com/wu17481748/android_kernel_mtk6771 android-kernel
+        git clone https://github.com/wu17481748/kernel_vivo_mt6765 android-kernel
         cd android-kernel
 
 
@@ -88,7 +88,7 @@ jobs:
         export PATH=$GITHUB_WORKSPACE/kernel_workspace/clang-aosp/bin:$GITHUB_WORKSPACE/kernel_workspace/gcc64/bin:$GITHUB_WORKSPACE/kernel_workspace/gcc32/bin:$PATH
         export KBUILD_BUILD_HOST=企鹅交流:722651738
         export KBUILD_BUILD_USER=kuan-jsbsbxjxh66
-        make -s -j$(nproc --all) O=out ARCH=arm64 oppo6771_${{ github.event.inputs.device }}_defconfig
+        make -s -j$(nproc --all) O=out ARCH=arm64 ${{ github.event.inputs.device }}
         make -j$(nproc --all) CC="ccache clang" O=out ARCH=arm64 CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi-
                 
 
@@ -111,5 +111,5 @@ jobs:
     - name: 上传编译内核
       uses: actions/upload-artifact@v4
       with:
-        name: mtk6771-${{ github.event.inputs.device }}-kernel
+        name: mtk6765-${{ github.event.inputs.device }}-kernel
         path: kernel_workspace/android-kernel/out/arch/arm64/boot/*
